@@ -1,5 +1,5 @@
 'use strict';
-import { StatusBarAlignment, window, ExtensionContext, commands, workspace } from 'vscode';
+import { StatusBarAlignment, window, ExtensionContext, commands } from 'vscode';
 
 export function activate(context: ExtensionContext) {
     const instant = new Date();

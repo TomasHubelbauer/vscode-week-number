@@ -2,7 +2,7 @@
 
 Displays the current week number in VS Code status bar.
 
-![Screenshot](screenshot.png)
+![Screenshot](screenshot.gif)
 
 ## Release Notes
 
