@@ -2,7 +2,7 @@
     "name": "vscode-week-number",
     "displayName": "Week Number",
     "description": "Displays the current week number in the status bar",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "publisher": "TomasHubelbauer",
     "repository": {
         "type" : "git",
@@ -21,8 +21,8 @@
     "contributes": {
         "commands": [
             {
-                "command": "extension.sayHello",
-                "title": "Hello World"
+                "command": "extension.insertWeekNumber",
+                "title": "Insert Current Week Number"
             }
         ]
     },

@@ -1,5 +1,5 @@
 'use strict';
-import { StatusBarAlignment, window, ExtensionContext } from 'vscode';
+import { StatusBarAlignment, window, ExtensionContext, commands, workspace } from 'vscode';
 
 export function activate(context: ExtensionContext) {
     const instant = new Date();
@@ -11,4 +11,13 @@ export function activate(context: ExtensionContext) {
 
     statusBarItem.text = `Week ${weekNumber}`;
     statusBarItem.show();
+
+    context.subscriptions.push(commands.registerCommand('extension.insertWeekNumber', () => {
+        const textEditor = window.activeTextEditor;
+        if (textEditor !== undefined) {
+            textEditor.edit(editBuilder => {
+                editBuilder.insert(textEditor.selection.active, weekNumber.toString());
+            });
+        }
+    }));
 }
