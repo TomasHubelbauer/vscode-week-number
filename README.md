@@ -1,4 +1,4 @@
-# Week Number
+# [Week Number](https://marketplace.visualstudio.com/items?itemName=TomasHubelbauer.vscode-week-number)
 ![Installs](https://vsmarketplacebadge.apphb.com/installs-short/TomasHubelbauer.vscode-week-number.svg)
 
 Displays the current week number in VS Code status bar.
@@ -8,5 +8,3 @@ Displays the current week number in VS Code status bar.
 ## Release Notes
 
 See the [change log](CHANGELOG.md).
-
-[In the Marketplace](https://marketplace.visualstudio.com/items?itemName=TomasHubelbauer.vscode-week-number)
