@@ -1,12 +1,12 @@
 {
     "name": "vscode-week-number",
     "displayName": "Week Number",
-    "description": "Displays the current week number in the status bar",
-    "version": "3.0.0",
+    "description": "Displays the current week number in the status bar and contributes an editor command for inserting the current week number",
+    "version": "4.0.0",
     "publisher": "TomasHubelbauer",
     "repository": {
-        "type" : "git",
-        "url" : "https://github.com/TomasHubelbauer/vscode-week-number.git"
+        "type": "git",
+        "url": "https://github.com/TomasHubelbauer/vscode-week-number.git"
     },
     "engines": {
         "vscode": "^1.22.0"
@@ -24,7 +24,29 @@
                 "command": "extension.insertWeekNumber",
                 "title": "Insert Current Week Number"
             }
-        ]
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "Week Number",
+            "properties": {
+                "weekNumber.weekWord": {
+                    "type": [
+                        "string",
+                        "null"
+                    ],
+                    "default": null,
+                    "description": "What to show for the Week word, or null if to show just the week number"
+                },
+                "weekNumber.statusBarAlignment": {
+                    "type": "string",
+                    "enum": [
+                        "left",
+                        "right"
+                    ],
+                    "default": "left"
+                }
+            }
+        }
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",

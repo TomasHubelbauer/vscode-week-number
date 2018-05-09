@@ -1,7 +1,36 @@
 'use strict';
-import { StatusBarAlignment, window, ExtensionContext, commands } from 'vscode';
+import { StatusBarAlignment, window, ExtensionContext, commands, workspace, StatusBarItem, env } from 'vscode';
+
+let statusBarItem: StatusBarItem;
+let weekNumber: number;
 
 export function activate(context: ExtensionContext) {
+    context.subscriptions.push(commands.registerTextEditorCommand('extension.insertWeekNumber', (textEditor, edit) => {
+        edit.insert(textEditor.selection.active, weekNumber.toString());
+    }));
+
+    paint();
+    workspace.onDidChangeConfiguration(event => {
+        if (event.affectsConfiguration('weekNumber')) {
+            if (statusBarItem) {
+                statusBarItem.dispose();
+            }
+
+            paint();
+        }
+    });
+
+    // Update the week number every hour
+    setInterval(paint, 1000 * 60 * 60);
+}
+
+export function deactivate() {
+    if (statusBarItem) {
+        statusBarItem.dispose();
+    }
+}
+
+function paint() {
     // Algorithm from https://www.epochconverter.com/weeknumbers
     const instant = new Date();
     instant.setDate(instant.getDate() - ((instant.getDay() + 6) % 7) + 3);
@@ -11,20 +40,27 @@ export function activate(context: ExtensionContext) {
         instant.setMonth(0, 1 + ((4 - instant.getDay()) + 7) % 7);
     }
 
-    const weekNumber = 1 + Math.ceil((firstThursday - instant.getTime()) / 604800000);
+    weekNumber = 1 + Math.ceil((firstThursday - instant.getTime()) / 604800000);
 
-    const statusBarItem = window.createStatusBarItem(StatusBarAlignment.Left);
-    context.subscriptions.push(statusBarItem);
+    let { weekWord, statusBarAlignment } = workspace.getConfiguration('weekNumber');
+    switch (statusBarAlignment) {
+        case "left": statusBarAlignment = StatusBarAlignment.Left; break;
+        case "right": statusBarAlignment = StatusBarAlignment.Right; break;
+    }
 
-    statusBarItem.text = `Week ${weekNumber}`;
-    statusBarItem.show();
-
-    context.subscriptions.push(commands.registerCommand('extension.insertWeekNumber', () => {
-        const textEditor = window.activeTextEditor;
-        if (textEditor !== undefined) {
-            textEditor.edit(editBuilder => {
-                editBuilder.insert(textEditor.selection.active, weekNumber.toString());
-            });
+    if (weekWord === null) {
+        // TODO: Contribute translations
+        switch (env.language) {
+            case 'en':
+            case 'en-US':
+                weekWord = 'Week';
+                break;
         }
-    }));
+    }
+
+    console.log(env.language);
+
+    statusBarItem = window.createStatusBarItem(statusBarAlignment);
+    statusBarItem.text = weekWord !== '' ? `${weekWord} ${weekNumber}` : weekNumber.toString();
+    statusBarItem.show();
 }
