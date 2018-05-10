@@ -12,10 +12,6 @@ export function activate(context: ExtensionContext) {
     paint();
     workspace.onDidChangeConfiguration(event => {
         if (event.affectsConfiguration('weekNumber')) {
-            if (statusBarItem) {
-                statusBarItem.dispose();
-            }
-
             paint();
         }
     });
@@ -26,11 +22,17 @@ export function activate(context: ExtensionContext) {
 
 export function deactivate() {
     if (statusBarItem) {
+        statusBarItem.hide();
         statusBarItem.dispose();
     }
 }
 
 function paint() {
+    if (statusBarItem) {
+        statusBarItem.hide();
+        statusBarItem.dispose();
+    }
+
     // Algorithm from https://www.epochconverter.com/weeknumbers
     const instant = new Date();
     instant.setDate(instant.getDate() - ((instant.getDay() + 6) % 7) + 3);
@@ -57,8 +59,6 @@ function paint() {
                 break;
         }
     }
-
-    console.log(env.language);
 
     statusBarItem = window.createStatusBarItem(statusBarAlignment);
     statusBarItem.text = weekWord !== '' ? `${weekWord} ${weekNumber}` : weekNumber.toString();
