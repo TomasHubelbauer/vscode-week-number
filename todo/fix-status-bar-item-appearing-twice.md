@@ -1,3 +1,3 @@
-# Fix status bar item appearing twice
+# Test and release a fix for status bar item appearing multiple times
 
-Currently unclear under what circumnstances this happens.
+In tree, but untested.
