@@ -1,5 +1,9 @@
 # Change Log
 
+## `4.0.1` (2018-05-11)
+
+Fix an issue with duplicating status bar items. Items now hide and dispose properly.
+
 ## `4.0.0` (2018-05-09)
 
 - Switch to using `registerTextEditorCommand` for the *Insert Current Week Number* command, which is much better suited
