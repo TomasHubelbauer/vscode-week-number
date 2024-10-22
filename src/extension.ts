@@ -57,6 +57,10 @@ function paint() {
             case 'en-US':
                 weekWord = 'Week';
                 break;
+            case 'de':
+            case 'de-DE':
+                weekWord = 'Woche';
+                break;
         }
     }
 
